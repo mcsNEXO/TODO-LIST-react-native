@@ -7,7 +7,7 @@ import {
   View,
   TouchableHighlight,
 } from 'react-native';
-import useTask from '../hooks/useTask';
+import useTask from '../../hooks/useTask';
 
 export default function Header() {
   const [textInput, setTextInput] = useState<string>('');
@@ -35,9 +35,10 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     textAlign: 'center',
+    padding: 10,
   },
   header: {
-    fontSize: 20,
+    fontSize: 30,
     textAlign: 'center',
     color: 'whitesmoke',
     marginTop: 10,
@@ -45,22 +46,27 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 2,
     borderColor: 'whitesmoke',
+    fontSize: 18,
     height: 40,
-    width: '80%',
+    width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
     borderRadius: 12,
     marginTop: 12,
     color: 'whitesmoke',
+    backgroundColor: '#2C394B',
+    padding: 10,
   },
   color: {
     color: 'white',
   },
   button: {
-    backgroundColor: 'black',
+    verticalAlign: 'center',
+    backgroundColor: '#334756',
     color: 'white',
     textAlign: 'center',
-    width: '30%',
+    width: '40%',
+    height: 32,
     marginTop: 10,
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 17.5,
     fontFamily: 'Rubik-Regular',
   },
 });

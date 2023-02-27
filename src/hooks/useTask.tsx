@@ -10,6 +10,7 @@ const useTask = () => {
   };
 
   const removeTasks = (index: number) => {
+    if (typeof index === null) return;
     const updatedTasks = tasks.filter((_, i: number) => i !== index);
     setTasks(updatedTasks);
   };

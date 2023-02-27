@@ -1,8 +1,8 @@
 import {useState, useReducer} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {ContextProvider} from './components/context/TaskContext';
-import Header from './components/Header/Header';
-import Main from './Main/Main';
+import {ContextProvider} from './src/context/TaskContext';
+import Header from './src/components/Header/Header';
+import Main from './src/Main/Main';
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#1C315E',
+    backgroundColor: '#18122B',
   },
 });
 
