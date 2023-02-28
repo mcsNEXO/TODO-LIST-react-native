@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import {TouchableOpacity} from 'react-native';
 interface IPanelButtons {
   removeHandler: () => void;
   closePanel: () => void;
@@ -15,18 +15,19 @@ const PanelButtons = ({
   return (
     <View style={styles.panel}>
       <Text style={styles.item}>
-        <Icon name="edit" size={35} color="green" onPress={modalOpenHandler} />
+        <TouchableOpacity onPress={modalOpenHandler}>
+          <Icon name="edit" size={35} color="green" />
+        </TouchableOpacity>
       </Text>
       <Text style={styles.item}>
-        <Icon name="cancel" size={35} color="black" onPress={closePanel} />
+        <TouchableOpacity onPress={closePanel}>
+          <Icon name="cancel" size={35} color="black" />
+        </TouchableOpacity>
       </Text>
       <Text style={styles.item}>
-        <Icon
-          name="delete-forever"
-          size={35}
-          color="#FF0303"
-          onPress={removeHandler}
-        />
+        <TouchableOpacity onPress={removeHandler}>
+          <Icon name="delete-forever" size={35} color="#FF0303" />
+        </TouchableOpacity>
       </Text>
     </View>
   );
@@ -50,6 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     textAlign: 'center',
+    textAlignVertical: 'center',
     color: 'white',
   },
 });

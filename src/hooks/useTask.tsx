@@ -5,8 +5,7 @@ const useTask = () => {
   const {tasks, setTasks} = useContext(Context);
 
   const addTask = (task: string) => {
-    if (task === '') return;
-    setTasks([...tasks, task]);
+    setTasks([...tasks, task.trim()]);
   };
 
   const removeTasks = (index: number) => {
@@ -15,7 +14,7 @@ const useTask = () => {
   };
 
   const editTask = (index: number, value: string) => {
-    tasks[index] = value;
+    tasks[index] = value.trim();
     setTasks(tasks);
   };
 

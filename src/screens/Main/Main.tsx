@@ -4,6 +4,7 @@ import {useState} from 'react';
 import Item from './components/Item';
 import PanelButtons from './components/PanelButtons';
 import EditModal from './components/EditModal';
+import {validation} from '../../helper/validationInputText';
 
 const Main = () => {
   const {tasks, removeTasks, editTask} = useTask();
@@ -35,6 +36,7 @@ const Main = () => {
 
   const editHandler = () => {
     if (indexOpenTask === null) return;
+    validation(editText);
     editTask(indexOpenTask, editText);
     editTextHandler('');
     modalOpenHandler(false);

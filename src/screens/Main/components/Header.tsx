@@ -5,8 +5,10 @@ import {
   TextInput,
   View,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
 import useTask from '../../../hooks/useTask';
+import {validation} from '../../../helper/validationInputText';
 
 const Header = () => {
   const [textInput, setTextInput] = useState<string>('');
@@ -15,6 +17,7 @@ const Header = () => {
   const onChange = (value: string) => setTextInput(value);
 
   const addTaskHandler = () => {
+    validation(textInput);
     addTask(textInput);
     onChange('');
   };
