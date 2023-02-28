@@ -1,29 +1,53 @@
-import {View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TextInput,
+  Modal,
+  Button,
+  Touchable,
+  TouchableOpacity,
+} from 'react-native';
 import useTask from '../../hooks/useTask';
 import {useState} from 'react';
 import Item from './Item/Item';
 import PanelButtons from './PanelButtons/PanelButtons';
+import ModalButton from './ModalButton';
 
 export default function Main() {
-  const {tasks, removeTasks} = useTask();
-  const [isOpen, setIsOpen] = useState(false);
+  const {tasks, removeTasks, editTask} = useTask();
   const [indexOpenTask, setIndexOpenTask] = useState<number | null>(null);
+  const [editText, setEditText] = useState<string>('');
+  const [openPanel, setOpenPanel] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const handleIsOpen = (value?: boolean) => setIsOpen(value || !isOpen);
+  const panelOpenHandler = (value?: boolean) =>
+    setOpenPanel(value || !openPanel);
+  const editTextHandler = (value: string) => setEditText(value);
+  const modalOpenHandler = (value: boolean) => setModalOpen(value);
 
   const closePanel = () => {
     setIndexOpenTask(null);
-    setIsOpen(false);
+    setOpenPanel(false);
   };
 
   const showPanel = (index: number) => {
-    handleIsOpen(true);
+    panelOpenHandler(true);
     setIndexOpenTask(index);
   };
 
   const removeHandler = () => {
     if (indexOpenTask === null) return;
     removeTasks(indexOpenTask);
+    closePanel();
+  };
+
+  const editHandler = () => {
+    if (indexOpenTask === null) return;
+    editTask(indexOpenTask, editText);
+    editTextHandler('');
+    modalOpenHandler(false);
     closePanel();
   };
 
@@ -42,8 +66,23 @@ export default function Main() {
         )}
         keyExtractor={(_, index) => index.toString()}
       />
-      {isOpen && (
-        <PanelButtons closePanel={closePanel} removeHandler={removeHandler} />
+      {openPanel && (
+        <>
+          <PanelButtons
+            closePanel={closePanel}
+            removeHandler={removeHandler}
+            modalOpenHandler={modalOpenHandler}
+          />
+          {modalOpen && (
+            <ModalButton
+              modalOpen={modalOpen}
+              editText={editText}
+              editTextHandler={editTextHandler}
+              editHandler={editHandler}
+              modalOpenHandler={modalOpenHandler}
+            />
+          )}
+        </>
       )}
     </>
   );
@@ -52,11 +91,11 @@ export default function Main() {
 const styles = StyleSheet.create({
   button: {
     width: 40,
-    fontSize: 20,
-    marginLeft: 10,
     height: '100%',
-    color: 'red',
     flex: 1,
+    marginLeft: 10,
+    fontSize: 20,
+    color: 'red',
   },
   dFlex: {
     display: 'flex',

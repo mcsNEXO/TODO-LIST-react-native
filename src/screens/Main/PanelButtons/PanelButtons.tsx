@@ -4,14 +4,21 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function PanelButtons({
   removeHandler,
   closePanel,
+  modalOpenHandler,
 }: {
   removeHandler: () => void;
   closePanel: () => void;
+  modalOpenHandler: (value: boolean) => void;
 }) {
   return (
     <View style={styles.panel}>
       <Text style={styles.item}>
-        <Icon name="edit" size={35} color="green" />
+        <Icon
+          name="edit"
+          size={35}
+          color="green"
+          onPress={() => modalOpenHandler(true)}
+        />
       </Text>
       <Text style={styles.item}>
         <Icon name="cancel" size={35} color="black" onPress={closePanel} />
@@ -30,20 +37,20 @@ export default function PanelButtons({
 
 const styles = StyleSheet.create({
   panel: {
+    width: '100%',
     height: 90,
-    backgroundColor: '#393053',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: '#393053',
   },
   item: {
     flex: 1,
     fontSize: 18,
-    color: 'white',
     textAlign: 'center',
+    color: 'white',
   },
 });

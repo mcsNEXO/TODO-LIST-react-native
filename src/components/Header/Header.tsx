@@ -12,7 +12,13 @@ import useTask from '../../hooks/useTask';
 export default function Header() {
   const [textInput, setTextInput] = useState<string>('');
   const {tasks, addTask} = useTask();
+
   const onChange = (value: string) => setTextInput(value);
+
+  const addTaskHandler = () => {
+    addTask(textInput);
+    onChange('');
+  };
 
   return (
     <View style={styles.container}>
@@ -22,9 +28,7 @@ export default function Header() {
         value={textInput}
         onChangeText={onChange}
       />
-      <TouchableHighlight
-        style={styles.button}
-        onPress={() => addTask(textInput)}>
+      <TouchableHighlight style={styles.button} onPress={addTaskHandler}>
         <Text style={[styles.text, styles.color]}>Add task</Text>
       </TouchableHighlight>
       <Text style={styles.headerText}>

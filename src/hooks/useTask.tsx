@@ -10,12 +10,16 @@ const useTask = () => {
   };
 
   const removeTasks = (index: number) => {
-    if (typeof index === null) return;
     const updatedTasks = tasks.filter((_, i: number) => i !== index);
     setTasks(updatedTasks);
   };
 
-  return {tasks, addTask, removeTasks};
+  const editTask = (index: number, value: string) => {
+    tasks[index] = value;
+    setTasks(tasks);
+  };
+
+  return {tasks, addTask, removeTasks, editTask};
 };
 
 export default useTask;
