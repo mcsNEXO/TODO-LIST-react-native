@@ -11,7 +11,7 @@ import useTask from '../../hooks/useTask';
 
 export default function Header() {
   const [textInput, setTextInput] = useState<string>('');
-  const {addTask} = useTask();
+  const {tasks, addTask} = useTask();
   const onChange = (value: string) => setTextInput(value);
 
   return (
@@ -27,6 +27,11 @@ export default function Header() {
         onPress={() => addTask(textInput)}>
         <Text style={[styles.text, styles.color]}>Add task</Text>
       </TouchableHighlight>
+      <Text style={styles.headerText}>
+        {tasks?.length === 0
+          ? "You've 0 tasks"
+          : `Your tasks (${tasks.length})`}
+      </Text>
     </View>
   );
 }
@@ -77,5 +82,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17.5,
     fontFamily: 'Rubik-Regular',
+  },
+  headerText: {
+    color: 'whitesmoke',
+    fontSize: 25,
+    textAlign: 'center',
+    marginTop: 12,
   },
 });

@@ -2,7 +2,7 @@ import {useState, useReducer} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ContextProvider} from './src/context/TaskContext';
 import Header from './src/components/Header/Header';
-import Main from './src/Main/Main';
+import Main from './src/screens/Main/Main';
 
 const App = () => {
   return (
