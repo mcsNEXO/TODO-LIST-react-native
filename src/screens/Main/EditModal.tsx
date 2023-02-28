@@ -7,19 +7,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-export default function ModalButton({
+interface IModalButton {
+  editText: string;
+  modalOpen: boolean;
+  editTextHandler: (value: string) => void;
+  editHandler: () => void;
+  modalOpenHandler: () => void;
+}
+
+const ModalButton = ({
   editText,
   modalOpen,
   editTextHandler,
   editHandler,
   modalOpenHandler,
-}: {
-  editText: string;
-  modalOpen: boolean;
-  editTextHandler: (value: string) => void;
-  editHandler: () => void;
-  modalOpenHandler: (value: boolean) => void;
-}) {
+}: IModalButton) => {
   return (
     <Modal transparent={true} visible={modalOpen} animationType={'slide'}>
       <View style={modal.centeredView}>
@@ -33,14 +35,16 @@ export default function ModalButton({
           <TouchableOpacity onPress={editHandler}>
             <Text style={modal.button}>Save</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => modalOpenHandler(false)}>
+          <TouchableOpacity onPress={modalOpenHandler}>
             <Text style={modal.button}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>
     </Modal>
   );
-}
+};
+
+export default ModalButton;
 
 const modal = StyleSheet.create({
   input: {

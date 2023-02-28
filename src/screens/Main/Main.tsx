@@ -1,21 +1,11 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TextInput,
-  Modal,
-  Button,
-  Touchable,
-  TouchableOpacity,
-} from 'react-native';
+import {FlatList} from 'react-native';
 import useTask from '../../hooks/useTask';
 import {useState} from 'react';
 import Item from './Item/Item';
 import PanelButtons from './PanelButtons/PanelButtons';
-import ModalButton from './ModalButton';
+import EditModal from './EditModal';
 
-export default function Main() {
+const Main = () => {
   const {tasks, removeTasks, editTask} = useTask();
   const [indexOpenTask, setIndexOpenTask] = useState<number | null>(null);
   const [editText, setEditText] = useState<string>('');
@@ -54,14 +44,13 @@ export default function Main() {
   return (
     <>
       <FlatList
-        style={{height: 'auto'}}
         data={tasks}
         renderItem={({item, index}) => (
           <Item
             title={item}
             index={index}
             indexOpenTask={indexOpenTask}
-            showPanel={showPanel}
+            showPanel={() => showPanel(index)}
           />
         )}
         keyExtractor={(_, index) => index.toString()}
@@ -71,37 +60,21 @@ export default function Main() {
           <PanelButtons
             closePanel={closePanel}
             removeHandler={removeHandler}
-            modalOpenHandler={modalOpenHandler}
+            modalOpenHandler={() => modalOpenHandler(true)}
           />
-          {modalOpen && (
-            <ModalButton
-              modalOpen={modalOpen}
-              editText={editText}
-              editTextHandler={editTextHandler}
-              editHandler={editHandler}
-              modalOpenHandler={modalOpenHandler}
-            />
-          )}
         </>
+      )}
+      {openPanel && modalOpen && (
+        <EditModal
+          modalOpen={modalOpen}
+          editText={editText}
+          editTextHandler={editTextHandler}
+          editHandler={editHandler}
+          modalOpenHandler={() => modalOpenHandler(false)}
+        />
       )}
     </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  button: {
-    width: 40,
-    height: '100%',
-    flex: 1,
-    marginLeft: 10,
-    fontSize: 20,
-    color: 'red',
-  },
-  dFlex: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    color: 'whitesmoke',
-  },
-});
+export default Main;

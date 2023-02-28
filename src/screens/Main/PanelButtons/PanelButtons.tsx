@@ -1,24 +1,21 @@
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function PanelButtons({
+interface IPanelButtons {
+  removeHandler: () => void;
+  closePanel: () => void;
+  modalOpenHandler: () => void;
+}
+
+const PanelButtons = ({
   removeHandler,
   closePanel,
   modalOpenHandler,
-}: {
-  removeHandler: () => void;
-  closePanel: () => void;
-  modalOpenHandler: (value: boolean) => void;
-}) {
+}: IPanelButtons) => {
   return (
     <View style={styles.panel}>
       <Text style={styles.item}>
-        <Icon
-          name="edit"
-          size={35}
-          color="green"
-          onPress={() => modalOpenHandler(true)}
-        />
+        <Icon name="edit" size={35} color="green" onPress={modalOpenHandler} />
       </Text>
       <Text style={styles.item}>
         <Icon name="cancel" size={35} color="black" onPress={closePanel} />
@@ -33,7 +30,9 @@ export default function PanelButtons({
       </Text>
     </View>
   );
-}
+};
+
+export default PanelButtons;
 
 const styles = StyleSheet.create({
   panel: {

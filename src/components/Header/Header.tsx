@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {
-  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -9,7 +8,7 @@ import {
 } from 'react-native';
 import useTask from '../../hooks/useTask';
 
-export default function Header() {
+const Header = () => {
   const [textInput, setTextInput] = useState<string>('');
   const {tasks, addTask} = useTask();
 
@@ -29,7 +28,7 @@ export default function Header() {
         onChangeText={onChange}
       />
       <TouchableHighlight style={styles.button} onPress={addTaskHandler}>
-        <Text style={[styles.text, styles.color]}>Add task</Text>
+        <Text style={styles.text}>Add task</Text>
       </TouchableHighlight>
       <Text style={styles.headerText}>
         {tasks?.length === 0
@@ -38,7 +37,9 @@ export default function Header() {
       </Text>
     </View>
   );
-}
+};
+
+export default Header;
 
 const styles = StyleSheet.create({
   container: {
@@ -66,9 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#2C394B',
     padding: 10,
   },
-  color: {
-    color: 'white',
-  },
   button: {
     verticalAlign: 'center',
     backgroundColor: '#334756',
@@ -83,6 +81,7 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   text: {
+    color: 'white',
     textAlign: 'center',
     fontSize: 17.5,
     fontFamily: 'Rubik-Regular',

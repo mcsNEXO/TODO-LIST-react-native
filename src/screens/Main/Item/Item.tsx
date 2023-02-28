@@ -1,24 +1,23 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
-export default function Item({
-  title,
-  index,
-  indexOpenTask,
-  showPanel,
-}: {
+interface Item {
   title: string;
   index: number;
   indexOpenTask: number | null;
-  showPanel: (value: number) => void;
-}) {
+  showPanel: () => void;
+}
+
+const Item = ({title, index, indexOpenTask, showPanel}: Item) => {
   return (
     <TouchableOpacity
       style={[styles.box, index === indexOpenTask && styles.active]}
-      onPress={() => showPanel(index)}>
+      onPress={showPanel}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
-}
+};
+
+export default Item;
 
 const styles = StyleSheet.create({
   active: {
