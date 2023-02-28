@@ -6,7 +6,7 @@ import {
   View,
   TouchableHighlight,
 } from 'react-native';
-import useTask from '../../hooks/useTask';
+import useTask from '../../../hooks/useTask';
 
 const Header = () => {
   const [textInput, setTextInput] = useState<string>('');

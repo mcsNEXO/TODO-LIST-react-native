@@ -1,9 +1,9 @@
 import {FlatList} from 'react-native';
 import useTask from '../../hooks/useTask';
 import {useState} from 'react';
-import Item from './Item/Item';
-import PanelButtons from './PanelButtons/PanelButtons';
-import EditModal from './EditModal';
+import Item from './components/Item';
+import PanelButtons from './components/PanelButtons';
+import EditModal from './components/EditModal';
 
 const Main = () => {
   const {tasks, removeTasks, editTask} = useTask();
