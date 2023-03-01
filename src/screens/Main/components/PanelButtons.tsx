@@ -2,30 +2,32 @@ import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from 'react-native';
 interface IPanelButtons {
-  removeHandler: () => void;
+  removeMOpenHandler: () => void;
   closePanel: () => void;
-  modalOpenHandler: () => void;
+  editMOpenHandler: () => void;
+  panelBtnsOpen: boolean;
 }
 
 const PanelButtons = ({
-  removeHandler,
+  removeMOpenHandler,
   closePanel,
-  modalOpenHandler,
+  editMOpenHandler,
+  panelBtnsOpen,
 }: IPanelButtons) => {
   return (
     <View style={styles.panel}>
       <Text style={styles.item}>
-        <TouchableOpacity onPress={modalOpenHandler}>
+        <TouchableOpacity onPress={editMOpenHandler} disabled={panelBtnsOpen}>
           <Icon name="edit" size={35} color="green" />
         </TouchableOpacity>
       </Text>
       <Text style={styles.item}>
-        <TouchableOpacity onPress={closePanel}>
+        <TouchableOpacity onPress={closePanel} disabled={panelBtnsOpen}>
           <Icon name="cancel" size={35} color="black" />
         </TouchableOpacity>
       </Text>
       <Text style={styles.item}>
-        <TouchableOpacity onPress={removeHandler}>
+        <TouchableOpacity onPress={removeMOpenHandler} disabled={panelBtnsOpen}>
           <Icon name="delete-forever" size={35} color="#FF0303" />
         </TouchableOpacity>
       </Text>

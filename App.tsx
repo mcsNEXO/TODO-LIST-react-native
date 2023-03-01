@@ -1,16 +1,13 @@
-import {useState, useReducer} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {ContextProvider} from './src/context/TaskContext';
-import Header from './src/screens/Main/components/Header';
+import {TasksProvider} from './src/context/TaskContext';
 import Main from './src/screens/Main/Main';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <ContextProvider>
-        <Header />
+      <TasksProvider>
         <Main />
-      </ContextProvider>
+      </TasksProvider>
     </View>
   );
 };

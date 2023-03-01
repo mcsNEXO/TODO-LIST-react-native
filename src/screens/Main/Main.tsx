@@ -1,26 +1,33 @@
-import {FlatList} from 'react-native';
+import {Alert, FlatList} from 'react-native';
 import useTask from '../../hooks/useTask';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import Item from './components/Item';
 import PanelButtons from './components/PanelButtons';
-import EditModal from './components/EditModal';
+import EditModal from './components/Modals/EditModal';
 import {validation} from '../../helper/validationInputText';
+import Header from './components/Header';
+import RemoveModal from './components/Modals/RemoveModal';
 
 const Main = () => {
+  // word + M + Open = wordModalOpen
+  // set + Word + M + Open = setWordModalOpen
   const {tasks, removeTasks, editTask} = useTask();
   const [indexOpenTask, setIndexOpenTask] = useState<number | null>(null);
   const [editText, setEditText] = useState<string>('');
-  const [openPanel, setOpenPanel] = useState<boolean>(false);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [panelBtnsOpen, setPanelBtnsOpen] = useState<boolean>(false);
+  const [editMOpen, setEditMOpen] = useState<boolean>(false);
+  const [removeMOpen, setRemoveMOpen] = useState<boolean>(false);
 
+  // word+M+Open+Handler = word+Modal+Open+Handler
   const panelOpenHandler = (value?: boolean) =>
-    setOpenPanel(value || !openPanel);
+    setPanelBtnsOpen(value || !panelBtnsOpen);
   const editTextHandler = (value: string) => setEditText(value);
-  const modalOpenHandler = (value: boolean) => setModalOpen(value);
+  const editMOpenHandler = (value: boolean) => setEditMOpen(value);
+  const removeMOpenHandler = (value: boolean) => setRemoveMOpen(value);
 
   const closePanel = () => {
     setIndexOpenTask(null);
-    setOpenPanel(false);
+    setPanelBtnsOpen(false);
   };
 
   const showPanel = (index: number) => {
@@ -30,21 +37,29 @@ const Main = () => {
 
   const removeHandler = () => {
     if (indexOpenTask === null) return;
+
     removeTasks(indexOpenTask);
+    removeMOpenHandler(false);
     closePanel();
   };
 
   const editHandler = () => {
     if (indexOpenTask === null) return;
-    validation(editText);
+
+    //validation
+    const valid = validation(editText);
+    if (!valid) return;
+
+    //validation success
     editTask(indexOpenTask, editText);
     editTextHandler('');
-    modalOpenHandler(false);
+    editMOpenHandler(false);
     closePanel();
   };
 
   return (
     <>
+      <Header />
       <FlatList
         data={tasks}
         renderItem={({item, index}) => (
@@ -57,22 +72,30 @@ const Main = () => {
         )}
         keyExtractor={(_, index) => index.toString()}
       />
-      {openPanel && (
+      {panelBtnsOpen && (
         <>
           <PanelButtons
             closePanel={closePanel}
-            removeHandler={removeHandler}
-            modalOpenHandler={() => modalOpenHandler(true)}
+            removeMOpenHandler={() => removeMOpenHandler(true)}
+            editMOpenHandler={() => editMOpenHandler(true)}
+            panelBtnsOpen={!panelBtnsOpen}
           />
         </>
       )}
-      {openPanel && modalOpen && (
+      {panelBtnsOpen && editMOpen && (
         <EditModal
-          modalOpen={modalOpen}
+          editMOpen={editMOpen}
           editText={editText}
           editTextHandler={editTextHandler}
           editHandler={editHandler}
-          modalOpenHandler={() => modalOpenHandler(false)}
+          editMOpenHandler={() => editMOpenHandler(false)}
+        />
+      )}
+      {panelBtnsOpen && removeMOpen && (
+        <RemoveModal
+          removeMOpen={removeMOpen}
+          removeHandler={removeHandler}
+          removeMOpenHandler={() => removeMOpenHandler(false)}
         />
       )}
     </>
