@@ -39,7 +39,7 @@ const Main = () => {
   };
 
   const removeHandler = () => {
-    if (!indexOpenTask) return;
+    if (indexOpenTask === undefined) return;
 
     removeTasks(indexOpenTask);
     handleOpenRemoveM(false);
