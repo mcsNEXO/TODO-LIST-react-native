@@ -1,36 +1,24 @@
 import {useTasks} from '../context/TaskContext';
-import AsyncStorage from '@react-native-community/async-storage';
+import {setAsyncStorage} from '../helpers/asyncStorage';
 
 const useTask = () => {
   const {tasks, setTasks} = useTasks();
 
   const addTask = async (task: string) => {
     setTasks([...tasks, task.trim()]);
-    try {
-      await AsyncStorage.setItem('tasks', JSON.stringify([...tasks, task]));
-    } catch (err) {
-      console.log(err);
-    }
+    setAsyncStorage('tasks', [...tasks, task]);
   };
 
   const removeTasks = async (index: number) => {
     const updatedTasks = tasks.filter((_, i: number) => i !== index);
     setTasks(updatedTasks);
-    try {
-      await AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
-    } catch (err) {
-      console.log(err);
-    }
+    setAsyncStorage('tasks', updatedTasks);
   };
 
   const editTask = async (index: number, value: string) => {
     tasks[index] = value.trim();
     setTasks(tasks);
-    try {
-      await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-    } catch (err) {
-      console.log(err);
-    }
+    setAsyncStorage('tasks', tasks);
   };
 
   return {tasks, addTask, removeTasks, editTask};

@@ -43,4 +43,3 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgb(8, 8, 179)',
   },
 });
-styles;

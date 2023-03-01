@@ -1,10 +1,10 @@
-import {Alert, FlatList} from 'react-native';
+import {FlatList, SectionList, View} from 'react-native';
 import useTask from '../../hooks/useTask';
 import React, {useState} from 'react';
 import Item from './components/Item';
 import PanelButtons from './components/PanelButtons';
 import EditModal from './components/Modals/EditModal';
-import {validation} from '../../helper/validationInputText';
+import {validation} from '../../helpers/validationInputText';
 import Header from './components/Header';
 import RemoveModal from './components/Modals/RemoveModal';
 

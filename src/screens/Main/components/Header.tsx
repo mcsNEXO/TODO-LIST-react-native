@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import useTask from '../../../hooks/useTask';
-import {validation} from '../../../helper/validationInputText';
+import {validation} from '../../../helpers/validationInputText';
 
 const Header = () => {
   const [textInput, setTextInput] = useState<string>('');

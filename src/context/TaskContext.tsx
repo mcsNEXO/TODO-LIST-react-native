@@ -1,5 +1,5 @@
 import React, {createContext} from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import {getAsyncStorage} from '../helpers/asyncStorage';
 
 interface IContext {
   tasks: string[];
@@ -17,7 +17,7 @@ export const TasksProvider: React.FC<{children: React.ReactNode}> = ({
 
   React.useEffect(() => {
     (async () => {
-      const data = await AsyncStorage.getItem('tasks');
+      const data = await getAsyncStorage('tasks');
       if (!data) return;
       try {
         setTasks(JSON.parse(data));
