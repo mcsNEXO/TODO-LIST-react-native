@@ -9,25 +9,28 @@ import Header from './components/Header';
 import RemoveModal from './components/Modals/RemoveModal';
 
 const Main = () => {
-  // word + M + Open = wordModalOpen
-  // set + Word + M + Open = setWordModalOpen
-  const {tasks, removeTasks, editTask} = useTask();
-  const [indexOpenTask, setIndexOpenTask] = useState<number | null>(null);
-  const [editText, setEditText] = useState<string>('');
-  const [panelBtnsOpen, setPanelBtnsOpen] = useState<boolean>(false);
-  const [editMOpen, setEditMOpen] = useState<boolean>(false);
-  const [removeMOpen, setRemoveMOpen] = useState<boolean>(false);
+  //states
+  const [indexOpenTask, setIndexOpenTask] = useState<number>();
+  const [editValueM, setEditText] = useState<string>('');
+  const [openedPanelBtns, setOpenedPanelBtns] = useState<boolean>(false);
+  //opendEditModal => openedEditM
+  const [openedEditM, setOpenedEditM] = useState<boolean>(false);
+  const [openedRemoveM, setOpenedRemoveM] = useState<boolean>(false);
 
-  // word+M+Open+Handler = word+Modal+Open+Handler
-  const panelOpenHandler = (value?: boolean) =>
-    setPanelBtnsOpen(value || !panelBtnsOpen);
-  const editTextHandler = (value: string) => setEditText(value);
-  const editMOpenHandler = (value: boolean) => setEditMOpen(value);
-  const removeMOpenHandler = (value: boolean) => setRemoveMOpen(value);
+  //hooks
+  const {tasks, removeTasks, editTask} = useTask();
+
+  const panelOpenHandler = (value?: boolean) => {
+    setOpenedPanelBtns(value || !openedPanelBtns);
+  };
+  // handleOpenRemoveM => handleOpenRemoveModal
+  const handleEditValueM = (value: string) => setEditText(value);
+  const handleOpenEditM = (value: boolean) => setOpenedEditM(value);
+  const handleOpenRemoveM = (value: boolean) => setOpenedRemoveM(value);
 
   const closePanel = () => {
-    setIndexOpenTask(null);
-    setPanelBtnsOpen(false);
+    setIndexOpenTask(undefined);
+    setOpenedPanelBtns(false);
   };
 
   const showPanel = (index: number) => {
@@ -36,24 +39,21 @@ const Main = () => {
   };
 
   const removeHandler = () => {
-    if (indexOpenTask === null) return;
+    if (!indexOpenTask) return;
 
     removeTasks(indexOpenTask);
-    removeMOpenHandler(false);
+    handleOpenRemoveM(false);
     closePanel();
   };
 
   const editHandler = () => {
-    if (indexOpenTask === null) return;
-
     //validation
-    const valid = validation(editText);
-    if (!valid) return;
+    if (!indexOpenTask || !validation(editValueM)) return;
 
     //validation success
-    editTask(indexOpenTask, editText);
-    editTextHandler('');
-    editMOpenHandler(false);
+    editTask(indexOpenTask, editValueM);
+    handleEditValueM('');
+    handleOpenEditM(false);
     closePanel();
   };
 
@@ -72,30 +72,30 @@ const Main = () => {
         )}
         keyExtractor={(_, index) => index.toString()}
       />
-      {panelBtnsOpen && (
+      {openedPanelBtns && (
         <>
           <PanelButtons
             closePanel={closePanel}
-            removeMOpenHandler={() => removeMOpenHandler(true)}
-            editMOpenHandler={() => editMOpenHandler(true)}
-            panelBtnsOpen={!panelBtnsOpen}
+            handleOpenRemoveM={() => handleOpenRemoveM(true)}
+            handleOpenEditM={() => handleOpenEditM(true)}
+            panelBtnsOpen={!openedPanelBtns}
           />
         </>
       )}
-      {panelBtnsOpen && editMOpen && (
+      {openedPanelBtns && openedEditM && (
         <EditModal
-          editMOpen={editMOpen}
-          editText={editText}
-          editTextHandler={editTextHandler}
+          openedEditM={openedEditM}
+          editText={editValueM}
+          handleEditValueM={handleEditValueM}
           editHandler={editHandler}
-          editMOpenHandler={() => editMOpenHandler(false)}
+          handleOpenEditM={() => handleOpenEditM(false)}
         />
       )}
-      {panelBtnsOpen && removeMOpen && (
+      {openedPanelBtns && openedRemoveM && (
         <RemoveModal
-          removeMOpen={removeMOpen}
+          openedRemoveM={openedRemoveM}
           removeHandler={removeHandler}
-          removeMOpenHandler={() => removeMOpenHandler(false)}
+          handleOpenRemoveM={() => handleOpenRemoveM(false)}
         />
       )}
     </>

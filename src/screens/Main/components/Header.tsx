@@ -11,14 +11,14 @@ import {validation} from '../../../helper/validationInputText';
 
 const Header = () => {
   const [textInput, setTextInput] = useState<string>('');
+
   const {tasks, addTask} = useTask();
 
   const onChange = (value: string) => setTextInput(value);
 
   const addTaskHandler = () => {
     //validation
-    const valid = validation(textInput);
-    if (!valid) return;
+    if (!validation(textInput)) return;
 
     //validation success
     addTask(textInput);

@@ -18,8 +18,12 @@ export const TasksProvider: React.FC<{children: React.ReactNode}> = ({
   React.useEffect(() => {
     (async () => {
       const data = await AsyncStorage.getItem('tasks');
-      if (data === null) return;
-      setTasks(JSON.parse(data));
+      if (!data) return;
+      try {
+        setTasks(JSON.parse(data));
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, []);
 

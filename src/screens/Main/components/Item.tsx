@@ -3,7 +3,7 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 interface Item {
   title: string;
   index: number;
-  indexOpenTask: number | null;
+  indexOpenTask: number | undefined;
   showPanel: () => void;
 }
 

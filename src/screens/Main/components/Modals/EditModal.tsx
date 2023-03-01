@@ -3,33 +3,33 @@ import {styles} from './stylesModal';
 
 interface IModalButton {
   editText: string;
-  editMOpen: boolean;
-  editTextHandler: (value: string) => void;
+  openedEditM: boolean;
+  handleEditValueM: (value: string) => void;
   editHandler: () => void;
-  editMOpenHandler: () => void;
+  handleOpenEditM: () => void;
 }
 
 const ModalButton = ({
   editText,
-  editMOpen,
-  editTextHandler,
+  openedEditM,
+  handleEditValueM,
   editHandler,
-  editMOpenHandler,
+  handleOpenEditM,
 }: IModalButton) => {
   return (
-    <Modal transparent={true} visible={editMOpen} animationType={'slide'}>
+    <Modal transparent={true} visible={openedEditM} animationType={'slide'}>
       <View style={styles.centeredView}>
         <Text style={styles.title}>Enter new text</Text>
         <TextInput
           style={styles.input}
           value={editText}
-          onChangeText={editTextHandler}
+          onChangeText={handleEditValueM}
         />
         <View style={styles.conButtons}>
           <TouchableOpacity onPress={editHandler}>
             <Text style={styles.button}>Save</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={editMOpenHandler}>
+          <TouchableOpacity onPress={handleOpenEditM}>
             <Text style={styles.button}>Cancel</Text>
           </TouchableOpacity>
         </View>
