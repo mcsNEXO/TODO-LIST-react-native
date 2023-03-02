@@ -3,22 +3,23 @@ import {TasksProvider} from './context/TaskContext';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Main from './screens/Main/Main';
-import Maps from './screens/Maps/Maps';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
       <TasksProvider>
-        <Stack.Navigator>
-          <Stack.Screen name="Home">
-            {() => (
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="Home" options={{title: 'TODO LIST'}}>
+            {props => (
               <View style={styles.container}>
-                <Main />
+                <Main {...props} />
               </View>
             )}
           </Stack.Screen>
-          <Stack.Screen name="Maps" component={Maps} />
         </Stack.Navigator>
       </TasksProvider>
     </NavigationContainer>

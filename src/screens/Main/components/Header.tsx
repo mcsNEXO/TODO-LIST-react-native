@@ -9,7 +9,7 @@ import {
 import useTask from '../../../hooks/useTask';
 import {validation} from '../../../helpers/validationInputText';
 
-const Header = () => {
+const Header = ({navigation}: any) => {
   const [textInput, setTextInput] = useState<string>('');
 
   const {tasks, addTask} = useTask();
@@ -27,7 +27,9 @@ const Header = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>TODO LIST</Text>
+      <Text style={styles.header} onPress={() => navigation.navigate('Maps')}>
+        TODO LIST
+      </Text>
       <TextInput
         style={styles.input}
         value={textInput}

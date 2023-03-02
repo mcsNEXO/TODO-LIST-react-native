@@ -2,15 +2,14 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 interface Item {
   title: string;
-  index: number;
-  indexOpenTask: number | undefined;
+  isActive: boolean;
   showPanel: () => void;
 }
 
-const Item = ({title, index, indexOpenTask, showPanel}: Item) => {
+const Item = ({title, isActive, showPanel}: Item) => {
   return (
     <TouchableOpacity
-      style={[styles.box, index === indexOpenTask && styles.active]}
+      style={[styles.box, isActive && styles.active]}
       onPress={showPanel}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>

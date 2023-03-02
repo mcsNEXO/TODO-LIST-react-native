@@ -8,7 +8,7 @@ import {validation} from '../../helpers/validationInputText';
 import Header from './components/Header';
 import RemoveModal from './components/Modals/RemoveModal';
 
-const Main = () => {
+const Main = ({navigation}: any) => {
   //states
   const [indexOpenTask, setIndexOpenTask] = useState<number>();
   const [editValueM, setEditText] = useState<string>('');
@@ -48,7 +48,7 @@ const Main = () => {
 
   const editHandler = () => {
     //validation
-    if (!indexOpenTask || !validation(editValueM)) return;
+    if (indexOpenTask === undefined || !validation(editValueM)) return;
 
     //validation success
     editTask(indexOpenTask, editValueM);
@@ -59,14 +59,13 @@ const Main = () => {
 
   return (
     <>
-      <Header />
+      <Header navigation={navigation} />
       <FlatList
         data={tasks}
         renderItem={({item, index}) => (
           <Item
             title={item}
-            index={index}
-            indexOpenTask={indexOpenTask}
+            isActive={index === indexOpenTask}
             showPanel={() => showPanel(index)}
           />
         )}
